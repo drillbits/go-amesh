@@ -13,6 +13,12 @@ type MeshGetOptions struct {
 	DateTime time.Time
 }
 
+func FormatMeshDatetime(t time.Time) string {
+	const timefmt = "200601021504"
+	s := t.Format(timefmt)
+	return fmt.Sprintf("%s0", s[:len(s)-1])
+}
+
 func (s *MeshService) Get(opt *MeshGetOptions) (*Response, error) {
 	var t time.Time
 	if opt.DateTime.IsZero() {
@@ -20,10 +26,8 @@ func (s *MeshService) Get(opt *MeshGetOptions) (*Response, error) {
 	} else {
 		t = opt.DateTime
 	}
-	timefmt := "200601021504"
-	d := t.Format(timefmt)
-	path := fmt.Sprintf(
-		"mesh/100/%s0.gif", d[:len(d)-1])
+	d := FormatMeshDatetime(t)
+	path := fmt.Sprintf("mesh/100/%s.gif", d)
 	req, err := s.client.NewRequest(path)
 	if err != nil {
 		return nil, err
