@@ -63,14 +63,15 @@ type Response struct {
 }
 
 func newResponse(r *http.Response) (*Response, error) {
-	response := &Response{Response: r}
-	err := response.populateImage()
-	return response, err
+	resp := &Response{Response: r}
+	err := resp.populateImage()
+	return resp, err
 }
 
-func (r *Response) populateImage() error {
-	img, _, err := image.Decode(r.Body)
-	r.Image = img
+func (resp *Response) populateImage() error {
+	defer resp.Body.Close()
+	img, _, err := image.Decode(resp.Body)
+	resp.Image = img
 	return err
 }
 
@@ -80,8 +81,5 @@ func (c *Client) Do(req *http.Request, v interface{}) (*Response, error) {
 		return nil, err
 	}
 
-	defer resp.Body.Close()
-
-	response, err := newResponse(resp)
-	return response, err
+	return newResponse(resp)
 }
