@@ -16,7 +16,7 @@ const (
 	zoomHeight  = 480
 )
 
-var areas = map[int]Area{
+var Areas = map[int]Area{
 	0:  Area{0, "全体", wholeWidth, wholeHeight, 0, 0},
 	1:  Area{1, "台東", zoomWidth, zoomHeight, 1708, 555},
 	2:  Area{2, "江東", zoomWidth, zoomHeight, 1739, 710},
@@ -34,7 +34,7 @@ var areas = map[int]Area{
 }
 
 func GetArea(id int) (Area, bool) {
-	a, ok := areas[id]
+	a, ok := Areas[id]
 	return a, ok
 }
 
