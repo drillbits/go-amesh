@@ -39,7 +39,7 @@ func getMesh(client *amesh.Client) image.Image {
 func writeJPGMap(img image.Image, name string) {
 	f, _ := os.Create(name)
 	defer f.Close()
-	jpeg.Encode(f, img, &jpeg.Options{jpeg.DefaultQuality})
+	jpeg.Encode(f, img, &jpeg.Options{Quality: jpeg.DefaultQuality})
 }
 
 func writePNGMap(img image.Image, name string) {
